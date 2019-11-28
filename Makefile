@@ -1,27 +1,23 @@
-.PHONY: clean chrome noclip
+.PHONY: visit_patreon check_session noclip
 
-CHROME_BIN=/usr/bin/chromium-browser
-
-visit_noclip:
+visit_patreon:
 	ts-node open_browser.ts
 
-check_noclip_session:
+check_session:
 	ts-node open_browser.ts --check-cookies
-
-
-# chrome:
-# 	$(CHROME_BIN) \
-# 	  --remote-debugging-port=9222 \
-# 	  --no-first-run \
-# 	  --user-data-dir=./user_data
 
 INDEX_FILE := "$(shell date +%F)_index.html"
 
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 noclip_data/$(INDEX_FILE):
-	./noclip_update.sh
+	./update_noclip.sh
 
 noclip: noclip_data/$(INDEX_FILE)
 
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-# clean:
-# 	rm -rf target .cpcache bin
+darkneddiaries_data/$(INDEX_FILE):
+	./update_darknetdiaries.sh
+
+darkneddiaries: darkneddiaries_data/$(INDEX_FILE)
