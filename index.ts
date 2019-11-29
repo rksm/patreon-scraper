@@ -10,9 +10,9 @@ interface Args {
 
 function parseArgs(args: String[]): Args {
   let result: Partial<Args> = {};
-  for (let i = 0; i < args.length; i+=2) {
+  for (let i = 0; i < args.length; i += 2) {
     const name = args[i];
-    const val = args[i+1];
+    const val = args[i + 1];
     switch (name) {
       case "--campaign_id":
         result.campaignId = val;

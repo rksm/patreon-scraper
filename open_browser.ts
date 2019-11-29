@@ -1,9 +1,9 @@
-import {launch, Browser} from 'puppeteer';
+import { launch, Browser } from 'puppeteer';
 
 async function getPatreonCookies() {
   let browser: Browser;
   try {
-    browser = await launch({userDataDir: './user_data', headless: true});
+    browser = await launch({ userDataDir: './user_data', headless: true });
     const page = await browser.newPage();
     await page.goto('https://www.patreon.com/noclip/');
     return await page.cookies('https://patreon.com');
@@ -17,7 +17,7 @@ async function getPatreonCookies() {
 
 
 async function visitPatreon() {
-  const browser = await launch({userDataDir: './user_data', headless: false});
+  const browser = await launch({ userDataDir: './user_data', headless: false });
   const page = await browser.newPage();
   await page.goto('https://www.patreon.com/noclip/');
 }
@@ -37,4 +37,3 @@ async function visitPatreon() {
 
 })().then(() => console.log('done'))
   .catch(err => console.error(err));
-

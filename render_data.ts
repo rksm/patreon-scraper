@@ -1,8 +1,8 @@
-import {readFileSync, writeFileSync} from 'fs';
-import {resolve} from 'path';
+import { readFileSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
 
-import {formatDate, parseArgs} from './util';
-import {DataEntity, PostFile} from './PostDataInterface';
+import { formatDate, parseArgs } from './util';
+import { DataEntity, PostFile } from './PostDataInterface';
 
 function renderPostFile(postFile: PostFile): String {
   const isImage = !!postFile.url.match(/\.(jpe?g|png|gif|bmp)/);
@@ -13,7 +13,7 @@ function renderPostFile(postFile: PostFile): String {
 }
 
 function main() {
-  const {dataDir} = parseArgs(process.argv.slice(2));
+  const { dataDir } = parseArgs(process.argv.slice(2));
 
   const htmlFile = `./${dataDir}/${formatDate()}_index.html`;
   let html = `
@@ -34,7 +34,7 @@ max-height: 400px;
     JSON.parse(readFileSync(`./${dataDir}/data.json`).toString());
 
   for (const post of data) {
-    const {content, title, like_count, url, comment_count, published_at, post_file} =
+    const { content, title, like_count, url, comment_count, published_at, post_file } =
       post.attributes;
     html += `<h2><a href="${url}">${title}</a></h2>
 <div class="date">${published_at}</div>
