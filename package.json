@@ -2,7 +2,7 @@
   "name": "web-scraper",
   "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "patreon scrapter using chrome headless / puppeteer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,12 +10,14 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "@types/cheerio": "^0.22.30",
-    "@types/puppeteer": "^5.4.4",
     "cheerio": "^1.0.0-rc.10",
     "puppeteer": "^10.1.0"
   },
   "devDependencies": {
-    "@types/node": "^16.4"
+    "@types/cheerio": "^0.22.30",
+    "@types/puppeteer": "^5.4.4",
+    "@types/node": "^16.4",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   }
 }

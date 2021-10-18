@@ -1,10 +1,10 @@
 .PHONY: visit_patreon check_session noclip
 
 visit_patreon:
-	ts-node open_browser.ts
+	npx ts-node open_browser.ts
 
 check_session:
-	ts-node open_browser.ts --check-cookies
+	npx ts-node open_browser.ts --check-cookies
 
 INDEX_FILE := "$(shell date +%F)_index.html"
 
