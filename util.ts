@@ -1,7 +1,7 @@
 export interface Args {
-  campaignId: string,
-  dataDir: string,
-  patreonUrl: string,
+  campaignId: string;
+  dataDir: string;
+  patreonUrl: string;
 }
 
 export function parseArgs(args: string[]): Args {
@@ -37,9 +37,9 @@ function pad(s: String, length: number, padString: String): String {
     throw new Error("padString is empty!");
   }
   while (s.length < length) {
-    s = `${padString}${s}`
+    s = `${padString}${s}`;
   }
-  return s
+  return s;
 }
 
 export function formatDate() {
@@ -56,5 +56,5 @@ export function formatDateAndTime() {
   const hours = pad(String(date.getHours()), 2, "0");
   const mins = pad(String(date.getMinutes()), 2, "0");
   const secs = pad(String(date.getSeconds()), 2, "0");
-  return `${dateString}_${hours}_${mins}_${secs}`
+  return `${dateString}_${hours}_${mins}_${secs}`;
 }

@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, PathLike, readFileSync, writeFileSync } from "fs";
 import { get, RequestOptions } from "https";
 import { resolve } from "path";
-import { Browser, launch } from "puppeteer";
+import puppeteer from "puppeteer";
 import { format, parse, Url } from "url";
 import { DataEntity, PostData } from "./PostDataInterface";
 import { Args, formatDateAndTime, parseArgs } from "./util";
@@ -84,9 +84,9 @@ function requestData(opts: RequestOptions): Promise<PostData> {
 }
 
 async function getPatreonCookies() {
-  let browser: Browser;
+  let browser: puppeteer.Browser;
   try {
-    browser = await launch({ userDataDir: "./user_data", headless: true });
+    browser = await puppeteer.launch({ userDataDir: "./user_data", headless: true });
     const page = await browser.newPage();
     await page.goto("https://www.patreon.com/noclip/");
     return await page.cookies("https://patreon.com");
