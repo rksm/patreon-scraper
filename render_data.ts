@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
 import { formatDate, parseArgs } from './util';
-import { DataEntity, PostFile } from './PostDataInterface';
+import { DataEntity, PostFile, Embed } from './PostDataInterface';
 
 function renderPostFile(postFile: PostFile): String {
     const isImage = !!postFile.url.match(/\.(jpe?g|png|gif|bmp)/);
@@ -10,6 +10,21 @@ function renderPostFile(postFile: PostFile): String {
         return `<div><a href="${postFile.url}"><img src="${postFile.url}"/></a></div>\n`;
     }
     return `<div class="post_file">linked file: <a href="${postFile.url}">${postFile.name}</a></div>\n`;
+}
+
+function renderEmbed(embed: Embed, post_type: String, index: number): String {
+    let html = ''
+    if (post_type === 'video_embed') {
+        let video = embed.html.replace('"//', '"https://');
+        html += `<br><div>
+        <button onclick="loadVideo(${index})">Load embed</button>
+        <template class="video" id="video-${index}">${video}</template>
+        </div>`;
+    }
+    if (embed.url) {
+        html += `<br><a href="${embed.url}">${embed.url}</a>`
+    }
+    return html
 }
 
 function main() {
@@ -43,7 +58,7 @@ function main() {
         JSON.parse(readFileSync(`./${dataDir}/data.json`).toString());
 
     data.forEach((post, index) => {
-        const { content, title, like_count, url, comment_count, published_at, post_file, embed } = post.attributes;
+        const { content, title, like_count, url, comment_count, published_at, post_file, embed, post_type } = post.attributes;
         html += `<h2><a href="${url}">${title}</a></h2>
         <div class="date">${published_at}</div>
         <div class="count">likes: ${like_count}</div>
@@ -52,11 +67,7 @@ function main() {
             html += renderPostFile(post_file);
         }
         if (embed) {
-            let video = embed.html.replace('"//', '"https://');
-            html += `<div>
-            <button onclick="loadVideo(${index})">Load video</button>
-            <template class="video" id="video-${index}">${video}</template>
-            </div>`;
+            html += renderEmbed(embed, post_type, index);
         }
         html += `<div>
         ${content}
