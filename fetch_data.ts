@@ -157,7 +157,7 @@ async function run(args: Args) {
     const fname = resolve(postDataFile);
     console.log(`wrote ${fname}`);
   } else {
-    console.log("found no new posts :(()");
+    console.log("found no new posts :(");
   }
 }
 
