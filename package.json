@@ -11,13 +11,13 @@
   "license": "UNLICENSED",
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^12.0.1"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.30",
     "@types/puppeteer": "^5.4.4",
-    "@types/node": "^16.4",
-    "ts-node": "^10.3.0",
-    "typescript": "^4.4.4"
+    "@types/node": "^16.11",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
   }
 }
