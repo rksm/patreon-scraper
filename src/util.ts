@@ -2,6 +2,7 @@ export interface Args {
   campaignId: string;
   dataDir: string;
   patreonUrl: string;
+  debug?: boolean;
 }
 
 export function parseArgs(args: string[]): Args {
@@ -18,6 +19,9 @@ export function parseArgs(args: string[]): Args {
         break;
       case "--patreon_url":
         result.patreonUrl = val;
+        break;
+      case "--debug":
+        result.debug = true;
         break;
       default:
     }

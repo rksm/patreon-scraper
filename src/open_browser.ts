@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import { logRequests } from "./util-puppeteer";
 
 async function getPatreonCookies() {
   let browser: puppeteer.Browser;
@@ -17,6 +18,7 @@ async function getPatreonCookies() {
 async function visitPatreon() {
   const browser = await puppeteer.launch({ userDataDir: "./user_data", headless: false });
   const page = await browser.newPage();
+  logRequests(page);
   await page.goto("https://www.patreon.com/noclip/");
 }
 
