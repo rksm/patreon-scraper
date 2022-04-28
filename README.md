@@ -1,6 +1,6 @@
 ## Overview
 
-This downloads patreon posts from creators into local html files. Note that you will need a Patreon account and you will only be able to download the content that you can normally see on the web site anyway.
+This downloads patreon posts from creators into local html files. Note that you will need a Patreon account and you will only be able to download the content that you can normally see on the web site anyway. Consider this to be an archival tool.
 
 It uses headless chrome via puppeteer and not the official Patreon API.
 
