@@ -1,3 +1,5 @@
+import { Comments } from "./Comments";
+
 // make_types -i PostDataInterface.ts 2019-1-19_0_test.json PostData
 export interface PostData {
   data?: DataEntity[] | null;
@@ -10,6 +12,7 @@ export interface DataEntity {
   id: string;
   relationships: Relationships;
   type: string;
+  comments?: Comments;
 }
 export interface Attributes {
   change_visibility_at?: string | null;
