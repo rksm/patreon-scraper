@@ -61,7 +61,7 @@ The campaign_id of https://www.patreon.com/darknetdiaries (Jack Rhysider) is 168
 For "darknetdiaries" I would run:
 
 ```shell
-npx ts-node ./src/fetch_data.ts --campaign_id 1682532 --data_dir darknetdiaries_data --patreon_url https://www.patreon.com/darknetdiaries/
+npx ts-node ./src/fetch_data.ts --campaign_id 1682532 --data_dir darknetdiaries_data --patreon_url https://www.patreon.com/darknetdiaries/ --with-comments
 ```
 
 This creates a directory `darknetdiaries_data` and puts the raw posts as a json file in there.

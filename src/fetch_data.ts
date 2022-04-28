@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, PathLike, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { DataEntity } from "./PostDataInterface";
-import { Args, formatDateAndTime, parseArgs } from "./util";
+import { Args, parseArgs } from "./util";
 import { GetPatreonPosts } from "./patreon-posts";
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -17,18 +17,10 @@ function getOldData(postDataFile: string) {
   return JSON.parse(readFileSync(postDataFile as PathLike).toString()) as DataEntity[];
 }
 
-const baseDataName = formatDateAndTime();
-function save(dataDir: String, data: any, n: number) {
-  if (!existsSync(`./${dataDir}`)) {
-    mkdirSync(`./${dataDir}`);
-  }
-  writeFileSync(`./${dataDir}/${baseDataName}_${n}_raw.json`, JSON.stringify(data, null, 2));
-}
-
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 async function run(args: Args) {
-  const posts = new GetPatreonPosts(args.campaignId, args.debug);
+  const posts = new GetPatreonPosts(args.campaignId, args.withComments, args.debug);
 
   try {
     const cookies = await posts.loadCookies();
@@ -43,40 +35,14 @@ async function run(args: Args) {
 
   const postDataFile = dataFileJson(args.dataDir);
   const oldPosts = getOldData(postDataFile);
-  const oldPostIds = oldPosts.reduce<Set<DataEntity["id"]>>((ids, ea) => ids.add(ea.id), new Set());
 
-  let step = 0;
-  let nextCursor: string = "";
-  const newPosts: DataEntity[] = [];
-
+  let newPosts: DataEntity[];
   try {
-    while (true) {
-      const data = await posts.loadPosts(nextCursor);
-      if (data.data) {
-        data.data.forEach((d) => {
-          console.log("%s: %s", d.attributes.published_at, d.attributes.title);
-        });
-        const existingPostIndex = data.data.findIndex((ea) => oldPostIds.has(ea.id));
-        if (existingPostIndex > -1) {
-          newPosts.push(...data.data.slice(0, existingPostIndex));
-          if (existingPostIndex > 0) {
-            save(args.dataDir, data, step++);
-          }
-          break;
-        }
-        newPosts.push(...data.data);
-        save(args.dataDir, data, step++);
-      }
-
-      try {
-        nextCursor = data.meta.pagination.cursors.next;
-      } catch (err) {
-        nextCursor = "";
-      }
-      if (!nextCursor) break;
-    }
+    newPosts = await posts.loadAllPosts();
   } catch (err) {
     console.error("error fetching posts:", err);
+    await posts.closeBrowser();
+    process.exit(1);
   }
 
   try {
@@ -87,6 +53,9 @@ async function run(args: Args) {
 
   if (newPosts.length) {
     console.log(`found ${newPosts.length} new posts!`);
+    if (!existsSync(`./${args.dataDir}`)) {
+      mkdirSync(`./${args.dataDir}`);
+    }
     writeFileSync(postDataFile as PathLike, JSON.stringify(newPosts.concat(oldPosts), null, 2));
     const fname = resolve(postDataFile);
     console.log(`wrote ${fname}`);

@@ -3,6 +3,7 @@ export interface Args {
   dataDir: string;
   patreonUrl: string;
   debug?: boolean;
+  withComments?: boolean;
 }
 
 export function parseArgs(args: string[]): Args {
@@ -19,6 +20,9 @@ export function parseArgs(args: string[]): Args {
         break;
       case "--patreon_url":
         result.patreonUrl = val;
+        break;
+      case "--with-comments":
+        result.withComments = true;
         break;
       case "--debug":
         result.debug = true;
