@@ -44,7 +44,7 @@ This should print cookie data that has the `"name"` `"session_id"`.
 
 ### Step 3: Figure out the `campaign id` if the creator you want to download 
 
-Use the base URL of the creator, e.g. for "darknetdiaries" I would run
+Use the base URL of the creator, e.g. for "darknetdiaries" run
 ```shell
 npx ts-node src/fetch_campaign_id https://www.patreon.com/darknetdiaries/
 ```
@@ -58,7 +58,7 @@ The campaign_id of https://www.patreon.com/darknetdiaries (Jack Rhysider) is 168
 
 ### Step 4: Download the raw data
 
-For "darknetdiaries" I would run:
+For "darknetdiaries" run:
 
 ```shell
 npx ts-node ./src/fetch_data.ts --campaign_id 1682532 --data_dir darknetdiaries_data --patreon_url https://www.patreon.com/darknetdiaries/ --with-comments
@@ -69,7 +69,7 @@ This creates a directory `darknetdiaries_data` and puts the raw posts as a json 
 
 ### Step 5: Render the data (optional)
 
-You can render the json data into a html page, for "darknetdiaries" I would run:
+You can render the json data into a html page, for "darknetdiaries" run:
 
 ```shell
 npx ts-node ./src/render_data.ts  --campaign_id 1682532 --data_dir darknetdiaries_data --patreon_url https://www.patreon.com/darknetdiaries/
