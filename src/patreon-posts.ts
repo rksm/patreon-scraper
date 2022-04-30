@@ -192,6 +192,7 @@ export class GetPatreonPostComments {
 
     if (!result.data) result.data = [];
     if (!result.included) result.included = [];
+    if (!result.meta) result.meta = { count: 0 };
     for (const ea of newComments) {
       if (ea.data) result.data.push(...ea.data);
       if (ea.included) result.included.push(...ea.included);
